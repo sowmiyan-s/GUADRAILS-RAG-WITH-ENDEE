@@ -688,14 +688,18 @@ select.form-control {
   color: var(--text-primary);
 }
 
-.ext-tag {
-  background: var(--accent);
-  color: white;
-  padding: 0.1rem 0.3rem;
-  border-radius: 4px;
-  font-size: 0.55rem;
-  font-weight: 800;
-  text-transform: uppercase;
+.home-drop-zone {
+  margin-top: 2rem;
+  width: 100%;
+  max-width: 400px;
+  padding: 2.5rem;
+  background: var(--bg-surface);
+  border-width: 2px;
+}
+
+.home-drop-zone:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
 }
 
 .badge-confidential {

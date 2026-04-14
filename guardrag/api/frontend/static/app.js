@@ -725,19 +725,45 @@ function addFiles(files) {
   renderFileList();
 }
 
+const homeDropZone = $('homeDropZone');
+
+// Add files handler
+function handleDrop(e) {
+  e.preventDefault();
+  const dz = e.currentTarget;
+  dz.classList.remove('drag-over');
+  addFiles(e.dataTransfer.files);
+  
+  // If dropped in the home zone, switch to docs tab so user sees the progress
+  if (dz.id === 'homeDropZone') {
+    const docsTabBtn = document.querySelector('.tab-btn[data-tab="docs"]');
+    if (docsTabBtn) docsTabBtn.click();
+  }
+}
+
+function handleDragOver(e) {
+  e.preventDefault();
+  e.currentTarget.classList.add('drag-over');
+}
+
+function handleDragLeave(e) {
+  if (!e.currentTarget.contains(e.relatedTarget)) {
+    e.currentTarget.classList.remove('drag-over');
+  }
+}
+
+[dropZone, homeDropZone].forEach(dz => {
+  if (!dz) return;
+  dz.addEventListener('dragover', handleDragOver);
+  dz.addEventListener('dragleave', handleDragLeave);
+  dz.addEventListener('drop', handleDrop);
+  if (dz.id === 'homeDropZone') {
+    dz.addEventListener('click', () => fileInput.click());
+  }
+});
+
 dropZone.addEventListener('click', () => fileInput.click());
 dropClick.addEventListener('click', e => { e.stopPropagation(); fileInput.click(); });
-dropZone.addEventListener('keydown', e => {
-  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); }
-});
-dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
-dropZone.addEventListener('dragleave', e => {
-  if (!dropZone.contains(e.relatedTarget)) dropZone.classList.remove('drag-over');
-});
-dropZone.addEventListener('drop', e => {
-  e.preventDefault(); dropZone.classList.remove('drag-over');
-  addFiles(e.dataTransfer.files);
-});
 fileInput.addEventListener('change', () => { addFiles(fileInput.files); fileInput.value = ''; });
 
 btnReset.addEventListener('click', () => {
