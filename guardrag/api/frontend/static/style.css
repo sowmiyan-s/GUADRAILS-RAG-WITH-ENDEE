@@ -5,40 +5,40 @@
 
 /* ── Design Tokens ─────────────────────────────────────────────────── */
 :root {
-  /* Ultra-Premium Obsidian Palette */
-  --bg-base: #0f1115;
-  --bg-surface: #161a21;
-  --bg-raised: #1c212b;
-  --bg-glass: rgba(15, 17, 21, 0.95);
+  /* Restored ChatGPT-inspired Dark Mode Palette */
+  --bg-base: #212121;
+  --bg-surface: #171717;
+  --bg-raised: #2f2f2f;
+  --bg-glass: rgba(33, 33, 33, 0.98);
 
-  --border: #2d333d;
-  --border-light: #3d4452;
+  --border: #3d3d3d;
+  --border-light: #4d4d4d;
 
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
+  --text-primary: #ececf1;
+  --text-secondary: #b4b4b8;
+  --text-muted: #9a9a9a;
 
-  --accent: #3b82f6; /* Premium Blue */
-  --accent-hover: #60a5fa;
-  --accent-dim: rgba(59, 130, 246, 0.1);
-  --accent-border: #3b82f6;
+  --accent: #10a37f; /* Original ChatGPT Green */
+  --accent-hover: #1a7f64;
+  --accent-dim: rgba(16, 163, 127, 0.1);
+  --accent-border: #10a37f;
 
   --danger: #ef4444;
   --warn: #f59e0b;
-  --success: #10b981;
+  --success: #10a37f;
   --info: #3b82f6;
 
-  --radius-sm: 8px;
-  --radius: 12px;
-  --radius-lg: 16px;
-  --shadow: none;
-  --shadow-xl: none;
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 14px;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   --glow: none;
 
-  --sidebar-w: 280px;
+  --sidebar-w: 260px;
   --sidebar-rail: 0px; 
-  --header-h: 64px;
-  --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --header-h: 60px;
+  --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   --font-mono: 'JetBrains Mono', monospace;
 }
 
