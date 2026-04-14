@@ -928,12 +928,16 @@ select.form-control {
 
 /* Sidebar footer */
 .sidebar-footer {
+  padding: 1.25rem;
   margin-top: auto;
-  padding-top: .8rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  border-top: 1px solid var(--border);
-  padding-bottom: 0;
+  background: var(--bg-surface);
+}
+
+.footer-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+  margin-bottom: 1rem;
 }
 
 .version-tag {
@@ -944,9 +948,12 @@ select.form-control {
 }
 
 .footer-link {
-  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   text-decoration: none;
-  font-size: .68rem;
+  color: var(--text-muted);
+  font-size: 0.75rem;
   font-weight: 500;
   transition: color var(--transition);
 }
