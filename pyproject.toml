@@ -1,0 +1,92 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "guard-rag"
+version = "1.1.4"
+description = "Privacy-first, fully offline AI document assistant secured by tiered safety guardrails"
+readme = {file = "README.md", content-type = "text/markdown"}
+license = {file = "LICENSE"}
+authors = [
+    {name = "Sowmiyan S"},
+]
+keywords = [
+    "privacy",
+    "offline",
+    "security-guardrails",
+    "document-qa",
+    "private-gpt",
+]
+requires-python = ">=3.9"
+dependencies = [
+    "langchain>=0.3.0",
+    "langchain-core>=0.3.0",
+    "langchain-community>=0.3.0",
+    "langchain-text-splitters>=0.3.0",
+    "langchain-ollama>=0.2.0",
+    "langchain-huggingface>=0.1.0",
+    "langchain-classic>=0.1.0",
+    "sentence-transformers>=2.7.0",
+    "faiss-cpu>=1.8.0",
+    "pypdf>=4.2.0",
+    "docx2txt>=0.8",
+    "python-dotenv>=1.0.1",
+    "nest_asyncio>=1.6.0",
+    "rich>=13.0.0",
+]
+
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Environment :: Console",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+    "ruff>=0.3.0",
+    "mypy>=1.9.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/sowmiyan-s/GUARD-RAG"
+Documentation = "https://github.com/sowmiyan-s/GUARD-RAG#readme"
+Repository = "https://github.com/sowmiyan-s/GUARD-RAG"
+"Bug Tracker" = "https://github.com/sowmiyan-s/GUARD-RAG/issues"
+"PyPI Profile" = "https://pypi.org/project/guard-rag/"
+
+[project.scripts]
+guard-rag = "guardrag.cli.main:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["guardrag*"]
+
+[tool.setuptools.package-data]
+guardrag = ["py.typed", "api/frontend/**/*"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "UP", "B"]
+ignore = ["E501"] # Ignore line length errors (let the formatter handle it)
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"

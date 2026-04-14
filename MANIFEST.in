@@ -1,0 +1,12 @@
+include README.md
+include LICENSE
+include requirements.txt
+include docs/INSTALL.md
+include docs/QUICK_REFERENCE.md
+include CONTRIBUTING.md
+include CODE_OF_CONDUCT.md
+recursive-include docs *
+include .env.example
+recursive-include guardrag *.py *.typed
+recursive-include guardrag/api/frontend *
+

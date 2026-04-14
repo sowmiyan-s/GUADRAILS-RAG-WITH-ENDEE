@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Guardrails Local RAG Bot</title>
+  <meta name="description" content="Privacy-first AI document assistant secured by NVIDIA NeMo Guardrails." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;0,14..32,900&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="stylesheet" href="static/style.css" />
+</head>
+
+<body>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       SIDEBAR (collapsible on desktop, drawer on mobile)
+  ══════════════════════════════════════════════════════════════════ -->
+  <aside id="sidebar" class="sidebar" aria-label="Settings panel">
+
+    <!-- Brand header -->
+    <div class="sidebar-brand">
+      <span class="sb-text brand-title">GuardRAG <span class="v-tag">v2.0</span></span>
+      <button class="sb-collapse-btn" id="sidebarCollapseBtn" aria-label="Collapse sidebar">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="13 4 7 10 13 16" /></svg>
+      </button>
+      <button class="sb-mobile-close" id="sidebarClose">✕</button>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="sidebar-tabs sb-text">
+        <button class="tab-btn active" data-tab="chat">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Chat
+        </button>
+        <button class="tab-btn" data-tab="docs">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Documents
+        </button>
+        <button class="tab-btn" data-tab="settings">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            Settings
+        </button>
+    </div>
+
+    <div class="sidebar-body" id="sidebarBody">
+
+      <!-- TAB: CHAT -->
+      <div id="tab-chat" class="tab-content active">
+          <div class="section-label sb-text">Active Selection</div>
+          <p class="hint-text sb-text" id="activeModelLabel">No model active</p>
+
+          <button id="btnClear" class="btn btn-ghost btn-full sb-text" style="margin-top: 1rem;">
+            <svg style="width:14px;height:14px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            Clear Thread
+          </button>
+      </div>
+
+      <!-- TAB: DOCUMENTS -->
+      <div id="tab-docs" class="tab-content">
+          <div class="section-label sb-text">Document Library</div>
+          <div id="storagePool" class="storage-pool">
+            <div class="storage-empty sb-text" id="storageEmpty">No indexed collections yet.</div>
+          </div>
+          <button id="btnRefreshStorage" class="btn btn-ghost btn-full sb-text" style="margin-top:0.5rem; font-size:0.7rem;">
+            Refresh Library
+          </button>
+
+          <hr class="divider" />
+
+          <div class="section-label sb-text">Add Documents</div>
+          <div class="drop-zone" id="dropZone" role="button" tabindex="0">
+            <div class="drop-title">Drop or <span class="drop-link" id="dropClick">browse</span></div>
+            <input type="file" id="fileInput" multiple accept=".pdf,.txt,.doc,.docx" style="display:none;" />
+          </div>
+          <div id="fileList" class="file-list" style="display:none;" role="list"></div>
+          <div class="upload-actions" style="margin-top:0.75rem;">
+            <button id="btnProcess" class="btn btn-primary btn-full">Process</button>
+            <button id="btnReset" class="btn btn-ghost btn-full" style="display:none; margin-top:0.4rem;">Remove</button>
+            <div id="uploadStatus" class="upload-status" style="margin-top:0.5rem;"></div>
+          </div>
+
+          <hr class="divider" />
+
+          <div class="section-label sb-text">Indexing Options</div>
+          <div style="margin-top:0.5rem;">
+            <label class="form-label" for="chunkSize">Chunk Size</label>
+            <input id="chunkSize" type="number" class="form-control" value="1000" min="100" step="100" />
+          </div>
+          <div style="margin-top:0.5rem;">
+            <label class="form-label" for="chunkOverlap">Overlap</label>
+            <input id="chunkOverlap" type="number" class="form-control" value="200" min="0" step="50" />
+          </div>
+      </div>
+
+      <!-- TAB: SETTINGS -->
+      <div id="tab-settings" class="tab-content">
+          <div class="section-label sb-text">Connection</div>
+          <div style="margin-top:0.65rem;">
+            <label class="form-label sb-text" for="providerSelect">LLM Provider</label>
+            <select id="providerSelect" class="form-control sb-text">
+              <option value="ollama">Ollama (Offline)</option>
+              <option value="openai">OpenAI</option>
+              <option value="anthropic">Anthropic</option>
+              <option value="gemini">Gemini</option>
+            </select>
+          </div>
+
+          <div id="ollamaStatus" class="status-badge status-loading" style="margin-top: 0.85rem;">
+            <span class="status-dot"></span>
+            <span class="sb-text" id="ollamaStatusText">Checking…</span>
+          </div>
+
+          <div id="providerEndpointGroup" style="margin-top:0.65rem;">
+            <label class="form-label sb-text" for="ollamaEndpoint">Endpoint URL</label>
+            <input id="ollamaEndpoint" type="url" class="form-control sb-text" placeholder="http://localhost:11434" />
+          </div>
+
+          <div id="providerApiKeyGroup" style="margin-top:0.65rem; display:none;">
+            <label class="form-label sb-text" for="apiKey">API Key</label>
+            <input id="apiKey" type="password" class="form-control sb-text" placeholder="Enter API Key" />
+          </div>
+
+          <button id="btnStartOllama" class="btn btn-secondary btn-full" style="display:none; margin-top:0.65rem;">Launch Ollama</button>
+
+          <div style="margin-top:0.85rem;">
+            <label class="form-label sb-text" for="modelSelect">Target Model</label>
+            <select id="modelSelect" class="form-control sb-text">
+              <option value="gemma3:1b">gemma3:1b</option>
+            </select>
+          </div>
+
+          <hr class="divider" />
+
+          <div class="section-label sb-text">Safety Protocol</div>
+          <label class="toggle-row" for="guardrailsToggle">
+            <span class="toggle-label sb-text">Active Guardrails</span>
+            <div class="toggle-switch">
+              <input type="checkbox" id="guardrailsToggle" checked />
+              <span class="toggle-slider"></span>
+            </div>
+          </label>
+
+          <div style="margin-top:0.75rem;">
+            <label class="form-label sb-text" for="sensitivitySelect">Sensitivity</label>
+            <select id="sensitivitySelect" class="form-control sb-text">
+              <option value="Public">Public</option>
+              <option value="Internal" selected>Internal</option>
+              <option value="Confidential">Confidential</option>
+              <option value="Restricted">Restricted</option>
+            </select>
+          </div>
+
+          <div style="margin-top:0.65rem;">
+            <div id="sensitivityBadge" class="sensitivity-badge badge-internal">
+              <span id="sensitivityBadgeLabel">INTERNAL</span>
+            </div>
+          </div>
+      </div>
+
+    </div><!-- /sidebar-body -->
+
+    <div class="sidebar-footer">
+        <a href="https://github.com/sowmiyan-s/GUARD-RAG" target="_blank" class="footer-link sb-text">
+          <svg style="width:12px;height:12px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          Repository
+        </a>
+    </div>
+
+  </aside>
+
+    <!-- Icon-only rail (shown when sidebar is collapsed on desktop) -->
+    <div class="sidebar-rail" id="sidebarRail" style="display:none;">
+      <div class="rail-icon" title="Ollama status">
+        <span class="status-dot" id="railStatusDot"></span>
+      </div>
+      <div class="rail-icon" id="railStartOllama" title="Start Ollama" style="display:none; color:var(--warn);">START
+      </div>
+      <div class="rail-icon" title="Toggle guardrails" id="railGuardrailsIcon">G</div>
+      <div class="rail-icon" title="Clear conversation" id="railClearBtn">X</div>
+    </div>
+
+  </aside>
+
+  <!-- Backdrop (mobile only) -->
+  <div class="sidebar-backdrop" id="sidebarBackdrop" aria-hidden="true"></div>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       MAIN
+  ══════════════════════════════════════════════════════════════════ -->
+  <div class="main-wrapper" id="mainWrapper">
+
+    <!-- TOP HEADER -->
+    <header class="top-header">
+      <!-- Mobile hamburger -->
+      <button class="hamburger" id="sidebarOpen" aria-label="Open sidebar" aria-expanded="false"
+        aria-controls="sidebar">
+        <span></span><span></span><span></span>
+      </button>
+      <!-- Collapsed-sidebar expand button (desktop) -->
+      <button class="sb-expand-btn" id="sidebarExpandBtn" style="display:none;" aria-label="Expand sidebar"
+        title="Expand sidebar">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <polyline points="7 4 13 10 7 16" />
+        </svg>
+      </button>
+
+      <div class="header-text-wrap">
+        <h1 class="header-title">GuardRAG</h1>
+        <p class="header-sub">Online + Offline · Multi-LLM · Secure</p>
+      </div>
+
+      <div class="header-right">
+        <span class="header-badge" id="connectionBadge">LOCAL / SECURE</span>
+      </div>
+    </header>
+
+
+    <!-- CHAT AREA -->
+    <section class="chat-section" id="chatSection" aria-label="Chat area">
+
+      <div id="emptyState" class="empty-state">
+        <div class="empty-icon" aria-hidden="true">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"
+            stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-primary)">
+            <path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8z" />
+            <path d="M14 2v6h6" />
+            <path d="M12 18v-6" />
+            <path d="M9 15h6" />
+          </svg>
+        </div>
+        <div class="empty-title">Ready to Query</div>
+        <div class="empty-sub">
+          Upload documents to begin a secure conversation.
+          Use Ollama offline or cloud LLMs (OpenAI, Anthropic, Gemini).
+        </div>
+      </div>
+
+      <div id="chatMessages" class="chat-messages" style="display:none;" role="log" aria-live="polite"></div>
+
+      <div id="readyBanner" class="ready-banner" style="display:none;" role="status">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+          <path
+            d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0z" />
+        </svg>
+        Documents indexed — ask your first question below.
+      </div>
+
+    </section>
+
+    <!-- Typing indicator -->
+    <div id="typingIndicator" class="typing-indicator" style="display:none;" role="status">
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <span class="typing-text">Processing…</span>
+    </div>
+
+    <!-- INPUT BAR -->
+    <div class="input-bar-wrapper" id="inputBarWrapper" style="display:none;">
+      <div class="input-bar">
+        <div id="guardrailsIndicator" class="guardrails-indicator active" title="Guardrails enabled" aria-hidden="true">
+          G</div>
+        <textarea id="chatInput" class="chat-textarea" placeholder="Enter your question…" rows="1" disabled
+          aria-label="Chat message input"></textarea>
+        <button id="btnSend" class="send-btn" disabled aria-label="Send message">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true">
+            <line x1="22" y1="2" x2="11" y2="13" />
+            <polygon points="22 2 15 22 11 13 2 9 22 2" />
+          </svg>
+        </button>
+      </div>
+      <div class="input-hint">
+        <span id="sensitivityHint" aria-live="polite">
+          Sensitivity Level Active
+        </span>
+      </div>
+    </div>
+
+  </div><!-- /main-wrapper -->
+
+  <!-- Toasts -->
+  <div id="toastContainer" class="toast-container" role="region" aria-label="Notifications" aria-live="assertive"></div>
+
+  <!-- Tunnel How-To Modal -->
+  <div id="tunnelModal" class="modal-overlay" style="display:none;" role="dialog" aria-modal="true"
+    aria-labelledby="tunnelModalTitle">
+    <div class="modal-box">
+      <div class="modal-header">
+        <span class="modal-title" id="tunnelModalTitle">Connect Your Local Ollama Online</span>
+        <button class="modal-close" id="tunnelModalClose" aria-label="Close">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="hint-text" style="margin-bottom:0.9rem;">Since this app is hosted on the internet, it can't directly
+          reach <code>localhost</code> on your machine. Use a tunnel to bridge the gap.</p>
+
+        <div class="tunnel-option">
+          <div class="tunnel-name">Option A — ngrok <span class="tunnel-badge">Free</span></div>
+          <ol class="tunnel-steps">
+            <li>Install: <code>choco install ngrok</code> or download from <a href="https://ngrok.com/download"
+                target="_blank">ngrok.com/download</a></li>
+            <li>Start Ollama: <code>ollama serve</code></li>
+            <li>Run tunnel: <code>ngrok http 11434 --host-header="localhost:11434"</code></li>
+            <li>Copy the <code>https://xxxx.ngrok-free.app</code> URL</li>
+            <li>Paste it into the <strong>Endpoint URL</strong> field in the sidebar</li>
+          </ol>
+        </div>
+
+        <div class="tunnel-option" style="margin-top:0.9rem;">
+          <div class="tunnel-name">Option B — Cloudflare Tunnel <span class="tunnel-badge">Free · No account
+              needed</span></div>
+          <ol class="tunnel-steps">
+            <li>Start Ollama: <code>ollama serve</code></li>
+            <li>Run: <code>cloudflared tunnel --url http://localhost:11434</code></li>
+            <li>Copy the <code>https://xxx.trycloudflare.com</code> URL</li>
+            <li>Paste it into the <strong>Endpoint URL</strong> field in the sidebar</li>
+          </ol>
+        </div>
+
+        <div class="tunnel-note">
+          <strong>⚠ Security:</strong> Anyone with the tunnel URL can access your Ollama. Close the tunnel
+          (<kbd>Ctrl+C</kbd>) when not in use.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Start Ollama Instructions Modal ─────────────────────────────── -->
+  <div id="ollamaStartModal" class="modal-overlay" style="display:none;" role="dialog" aria-modal="true"
+    aria-labelledby="ollamaStartModalTitle">
+    <div class="modal-box">
+      <div class="modal-header">
+        <span class="modal-title" id="ollamaStartModalTitle">Start Ollama on Your Computer</span>
+        <button class="modal-close" id="ollamaStartModalClose" aria-label="Close">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="hint-text" style="margin-bottom:0.9rem;">
+          Automatic startup failed. Please ensure Ollama is installed on your computer and start it manually using the
+          terminal:
+        </p>
+
+        <div class="tunnel-option">
+          <div class="tunnel-name">Step 1 — Install Ollama <span class="tunnel-badge">One-time</span></div>
+          <p class="hint-text" style="margin:0.4rem 0 0.5rem;">
+            Download from <a href="https://ollama.com/download" target="_blank" rel="noopener">ollama.com/download</a>
+            and install for your OS.
+          </p>
+        </div>
+
+        <div class="tunnel-option" style="margin-top:0.85rem;">
+          <div class="tunnel-name">Step 2 — Start the Ollama server</div>
+          <ol class="tunnel-steps" style="margin-top:0.5rem;">
+            <li>Open <strong>Terminal</strong> (macOS / Linux) or <strong>Command Prompt / PowerShell</strong> (Windows)
+            </li>
+            <li>Run: <code>ollama serve</code></li>
+            <li>Leave that window open — Ollama keeps running in the background</li>
+          </ol>
+        </div>
+
+        <div class="tunnel-option" style="margin-top:0.85rem;">
+          <div class="tunnel-name">Step 3 — Pull a model <span class="tunnel-badge">If you haven't yet</span></div>
+          <ol class="tunnel-steps" style="margin-top:0.5rem;">
+            <li>In a <em>new</em> terminal window, run: <code>ollama pull gemma3:1b</code></li>
+            <li>Or any other model: <code>ollama pull llama3.2:1b</code></li>
+          </ol>
+        </div>
+
+        <div class="tunnel-note" style="margin-top:0.9rem;">
+          <strong>Auto-detecting…</strong> This window will close automatically once Ollama is detected running at
+          <code id="ollamaStartModalEndpoint">localhost:11434</code>.
+        </div>
+
+        <div style="margin-top:1rem; display:flex; gap:0.6rem; flex-wrap:wrap;">
+          <button id="ollamaStartRetry" class="btn btn-primary" style="gap:0.35rem;">Check Again</button>
+          <button id="ollamaStartModalClose2" class="btn btn-ghost"
+            onclick="document.getElementById('ollamaStartModal').style.display='none'">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="static/app.js"></script>
+</body>
+
+</html>
