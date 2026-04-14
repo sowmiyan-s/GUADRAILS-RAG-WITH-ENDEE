@@ -12,7 +12,6 @@ from typing import Tuple, Dict, Any, List, Optional
 from langchain_community.document_loaders import PyPDFLoader, TextLoader, Docx2txtLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_community.vectorstores import FAISS
 try:
     from langchain.chains import create_retrieval_chain, create_history_aware_retriever
     from langchain.chains.combine_documents import create_stuff_documents_chain
@@ -21,9 +20,6 @@ except ImportError:
     from langchain_classic.chains import create_retrieval_chain, create_history_aware_retriever
     from langchain_classic.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-
-# Fix OMP error for FAISS (must be before FAISS import)
-os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 # Proxy bypass
 _NO_PROXY = "huggingface.co,*.huggingface.co,localhost,127.0.0.1"

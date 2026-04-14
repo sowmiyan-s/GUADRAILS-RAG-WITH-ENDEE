@@ -24,7 +24,7 @@ class TestPackageImports(unittest.TestCase):
 
     def test_version_string(self):
         import guardrag
-        self.assertEqual(guardrag.__version__, "1.0.1")
+        self.assertEqual(guardrag.__version__, "1.1.4")
 
     def test_author(self):
         import guardrag
@@ -321,8 +321,8 @@ class TestRAGCoreMocked(unittest.TestCase):
             )
 
     @patch("guardrag.rag.core.HuggingFaceEmbeddings")
-    @patch("guardrag.rag.core.FAISS")
-    @patch("guardrag.rag.core._build_chain_from_vectorstore")
+    @patch("guardrag.vectordb.endee_client.EndeeVectorStore")
+    @patch("guardrag.rag.core._build_chain_from_retriever")
     @patch("guardrag.rag.core.PyPDFLoader")
     @patch("guardrag.rag.core.RecursiveCharacterTextSplitter")
     def test_build_rag_chain_creates_new_index(
@@ -330,7 +330,7 @@ class TestRAGCoreMocked(unittest.TestCase):
         mock_splitter_cls,
         mock_loader_cls,
         mock_build_chain,
-        mock_faiss,
+        mock_endee_vs_cls,
         mock_embeddings_cls,
     ):
         import tempfile, os
@@ -348,9 +348,10 @@ class TestRAGCoreMocked(unittest.TestCase):
         mock_splitter.split_documents.return_value = [mock_doc]
         mock_splitter_cls.return_value = mock_splitter
 
-        # --- mock FAISS ---
+        # --- mock Endee ---
         mock_vs = MagicMock()
-        mock_faiss.from_documents.return_value = mock_vs
+        mock_vs.get_stats.return_value = {"point_count": 0}
+        mock_endee_vs_cls.return_value = mock_vs
 
         # --- mock embeddings ---
         mock_embeddings_cls.return_value = MagicMock()
@@ -374,7 +375,7 @@ class TestRAGCoreMocked(unittest.TestCase):
             self.assertIsInstance(db_id, str)
             self.assertGreater(len(db_id), 0)
             self.assertEqual(chain, mock_chain)
-            mock_vs.save_local.assert_called_once()
+            mock_vs.create_index.assert_called_once()
 
     def test_sensitive_data_flow_end_to_end(self):
         """

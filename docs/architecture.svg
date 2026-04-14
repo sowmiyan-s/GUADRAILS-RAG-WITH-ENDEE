@@ -1,0 +1,48 @@
+<svg width="800" height="400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2c3e50;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#000000;stop-opacity:1" />
+    </linearGradient>
+    <filter id="f1" x="0" y="0" width="200%" height="200%">
+      <feOffset result="offOut" in="SourceAlpha" dx="5" dy="5" />
+      <feGaussianBlur result="blurOut" in="offOut" stdDeviation="3" />
+      <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="400" rx="15" ry="15" fill="url(#grad1)" />
+  
+  <!-- Frontend -->
+  <rect x="50" y="150" width="150" height="100" rx="10" ry="10" fill="#3498db" filter="url(#f1)" />
+  <text x="125" y="200" font-family="Arial" font-size="20" fill="white" text-anchor="middle">Frontend</text>
+  <text x="125" y="225" font-family="Arial" font-size="12" fill="white" text-anchor="middle">Vanilla JS &amp; CSS</text>
+  
+  <!-- API Server -->
+  <rect x="300" y="150" width="150" height="100" rx="10" ry="10" fill="#2ecc71" filter="url(#f1)" />
+  <text x="375" y="200" font-family="Arial" font-size="20" fill="white" text-anchor="middle">FastAPI</text>
+  <text x="375" y="225" font-family="Arial" font-size="12" fill="white" text-anchor="middle">Python Backend</text>
+  
+  <!-- Endee Vector DB -->
+  <rect x="550" y="50" width="180" height="80" rx="10" ry="10" fill="#e74c3c" filter="url(#f1)" />
+  <text x="640" y="90" font-family="Arial" font-size="18" fill="white" text-anchor="middle">Endee Vector DB</text>
+  <text x="640" y="110" font-family="Arial" font-size="12" fill="white" text-anchor="middle">C++ SIMD High Speed</text>
+  
+  <!-- Ollama LLM -->
+  <rect x="550" y="160" width="180" height="80" rx="10" ry="10" fill="#f1c40f" filter="url(#f1)" />
+  <text x="640" y="200" font-family="Arial" font-size="18" fill="white" text-anchor="middle">Ollama / Cloud</text>
+  <text x="640" y="220" font-family="Arial" font-size="12" fill="#333" text-anchor="middle">LLM Inference</text>
+  
+  <!-- Safety Guardrails -->
+  <rect x="550" y="270" width="180" height="80" rx="10" ry="10" fill="#9b59b6" filter="url(#f1)" />
+  <text x="640" y="310" font-family="Arial" font-size="18" fill="white" text-anchor="middle">Guardrails</text>
+  <text x="640" y="330" font-family="Arial" font-size="12" fill="white" text-anchor="middle">PII Detection &amp; Safety</text>
+  
+  <!-- Connections -->
+  <path d="M 200 200 L 300 200" stroke="white" stroke-width="2" marker-end="url(#arrow)" />
+  <path d="M 450 180 L 550 100" stroke="white" stroke-width="2" />
+  <path d="M 450 200 L 550 200" stroke="white" stroke-width="2" />
+  <path d="M 450 220 L 550 300" stroke="white" stroke-width="2" />
+  
+</svg>

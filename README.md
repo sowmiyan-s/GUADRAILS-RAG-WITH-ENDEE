@@ -12,6 +12,7 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.111+-green?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![Endee](https://img.shields.io/badge/Endee-Vector_DB-FF3B30?style=flat-square&logo=database&logoColor=white)](https://github.com/endee-io/endee)
 [![Ollama](https://img.shields.io/badge/Ollama-Local_LLM-black?style=flat-square&logo=python&logoColor=white)](https://ollama.com/)
+[![Build Status](https://github.com/sowmiyan-s/GUADRAILS-RAG-WITH-ENDEE/actions/workflows/main.yml/badge.svg)](https://github.com/sowmiyan-s/GUADRAILS-RAG-WITH-ENDEE/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](https://opensource.org/licenses/MIT)
 [![Stars](https://img.shields.io/github/stars/sowmiyan-s/GUADRAILS-RAG-WITH-ENDEE?style=flat-square)](https://github.com/sowmiyan-s/GUADRAILS-RAG-WITH-ENDEE)
 
@@ -20,6 +21,12 @@
 > **Upload Any Document. Ask Anything. Get Answers — 100% Locally.**  
 >  
 > Built for organizations that require **zero-trust privacy**, **sub-millisecond retrieval speed**, and **enterprise-grade security** without compromising on intelligence.
+
+<br/>
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/sowmiyan-s/GUADRAILS-RAG-WITH-ENDEE/output/github-snake-dark.svg" alt="Snake Animation" />
+</div>
 
 </div>
 
@@ -596,6 +603,12 @@ spec:
 ## 🏗️ Architecture & Components
 
 ### System Architecture
+
+<div align="center">
+  <img src="docs/workflow.svg" alt="Production Retrieval Workflow" width="800" />
+</div>
+
+<br/>
 
 ```
 ┌────────────────────────────────────────────────────────────┐
