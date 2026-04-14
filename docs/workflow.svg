@@ -1,77 +1,82 @@
-<svg width="800" height="400" viewBox="0 0 800 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="840" height="420" viewBox="0 0 840 420" fill="none" xmlns="http://www.w3.org/2000/svg">
   <!-- Background -->
-  <rect width="800" height="400" rx="20" fill="#171717"/>
+  <rect width="840" height="420" rx="16" fill="#111111"/>
   
   <!-- Styles & Animations -->
   <style>
-    @keyframes flow {
-      0% { stroke-dashoffset: 20; opacity: 0.3; }
-      50% { opacity: 1; }
-      100% { stroke-dashoffset: 0; opacity: 0.3; }
-    }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.05); opacity: 0.8; }
-    }
-    .node { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14px; fill: #ECECF1; }
-    .label { font-family: 'Inter', sans-serif; font-size: 11px; fill: #9A9A9A; text-transform: uppercase; letter-spacing: 0.05em; }
-    .connector { stroke: #10A37F; stroke-width: 2; stroke-dasharray: 5 5; animation: flow 2s linear infinite; }
-    .box { stroke: #3D3D3D; stroke-width: 1.5; transition: all 0.3s; }
-    .accent-box { fill: rgba(16, 163, 127, 0.1); stroke: #10A37F; }
-    .pulse-node { animation: pulse 3s ease-in-out infinite; transform-origin: center; }
+    @font-face { font-family: 'Inter'; font-style: normal; }
+    @keyframes flow { 0% { stroke-dashoffset: 24; } 100% { stroke-dashoffset: 0; } }
+    @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+    .node-text { font-family: 'Inter', system-ui, sans-serif; font-weight: 600; font-size: 15px; fill: #FFFFFF; }
+    .label-text { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #888888; text-transform: uppercase; letter-spacing: 0.08em; }
+    .connector { stroke: #10A37F; stroke-width: 2.5; stroke-dasharray: 6 6; animation: flow 1.5s linear infinite; opacity: 0.6; }
+    .node-box { fill: #1A1A1A; stroke: #333333; stroke-width: 1.5; rx: 12; transition: all 0.3s; }
+    .highlight-box { fill: rgba(16, 163, 127, 0.08); stroke: #10A37F; stroke-width: 2; }
+    .credit-text { font-family: 'Inter', system-ui, sans-serif; font-size: 10px; fill: #555555; }
+    .pulse { animation: pulse 2s ease-in-out infinite; }
   </style>
 
-  <!-- Nodes -->
-  
-  <!-- Document Input -->
-  <g transform="translate(50, 160)">
-    <rect class="box" width="120" height="80" rx="10" fill="#212121"/>
-    <text x="60" y="45" text-anchor="middle" class="node">Documents</text>
-    <text x="60" y="65" text-anchor="middle" class="label">PDF / TXT / DOCX</text>
+  <!-- Definition for Arrows -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#10A37F" />
+    </marker>
+  </defs>
+
+  <!-- 1. DATA INPUT -->
+  <g transform="translate(40, 160)">
+    <rect class="node-box" width="140" height="90" />
+    <text x="70" y="45" text-anchor="middle" class="node-text">Documents</text>
+    <text x="70" y="65" text-anchor="middle" class="label-text">PDF · TXT · DOCX</text>
   </g>
 
-  <!-- Parsing/Embeddings -->
+  <!-- 2. EMBEDDING ENGINE -->
   <g transform="translate(240, 160)">
-    <rect class="box accent-box" width="140" height="80" rx="10"/>
-    <text x="70" y="45" text-anchor="middle" class="node">Embeddings</text>
-    <text x="70" y="65" text-anchor="middle" class="label">MiniLM-L6-v2</text>
+    <rect class="node-box" width="140" height="90" />
+    <text x="70" y="45" text-anchor="middle" class="node-text">Embeddings</text>
+    <text x="70" y="65" text-anchor="middle" class="label-text">all-MiniLM-L6</text>
   </g>
 
-  <!-- Vector DB -->
-  <g transform="translate(450, 100)" class="pulse-node">
-    <rect class="box" width="160" height="100" rx="15" fill="#212121" stroke="#10A37F" stroke-width="2"/>
-    <path d="M480 130 H580 M480 150 H580 M480 170 H580" stroke="#3D3D3D" stroke-width="2"/>
-    <text x="530" y="145" text-anchor="middle" class="node" style="fill:#10A37F">ENDEE DB</text>
-    <text x="530" y="165" text-anchor="middle" class="label">Vector Index</text>
+  <!-- 3. VECTOR DATABASE (Top Path) -->
+  <g transform="translate(440, 80)">
+    <rect class="node-box highlight-box" width="160" height="100" />
+    <text x="80" y="45" text-anchor="middle" class="node-text" style="fill:#10A37F">ENDEE DB</text>
+    <text x="80" y="70" text-anchor="middle" class="label-text" style="fill:#10A37F; font-weight:700">Native Vector DB</text>
+    <circle cx="80" cy="15" r="4" fill="#10A37F" class="pulse" />
   </g>
 
-  <!-- LLM -->
-  <g transform="translate(450, 240)">
-    <rect class="box" width="160" height="80" rx="10" fill="#212121"/>
-    <text x="80" y="40" text-anchor="middle" class="node">Ollama / Cloud</text>
-    <text x="80" y="60" text-anchor="middle" class="label">Llama3 / Gemma2</text>
+  <!-- 4. LLM INFERENCE (Bottom Path) -->
+  <g transform="translate(440, 240)">
+    <rect class="node-box" width="160" height="100" />
+    <text x="80" y="45" text-anchor="middle" class="node-text">Ollama LLM</text>
+    <text x="80" y="70" text-anchor="middle" class="label-text">Llama3 / Gemma2</text>
   </g>
 
-  <!-- User Output -->
-  <g transform="translate(680, 160)">
-    <circle cx="40" cy="40" r="35" fill="rgba(16, 163, 127, 0.2)" stroke="#10A37F" stroke-width="1.5"/>
-    <text x="40" y="45" text-anchor="middle" class="node">Answer</text>
+  <!-- 5. FINAL OUTPUT -->
+  <g transform="translate(680, 170)">
+    <rect class="node-box highlight-box" width="120" height="70" style="rx:35" />
+    <text x="60" y="40" text-anchor="middle" class="node-text">Answer</text>
+    <text x="60" y="85" text-anchor="middle" class="label-text">RAG Response</text>
   </g>
 
-  <!-- Connectors -->
+  <!-- CONNECTORS (Aligned) -->
+  
   <!-- Doc -> Embeddings -->
-  <line x1="170" y1="200" x2="240" y2="200" class="connector"/>
+  <path d="M180 205 H240" class="connector" />
   
-  <!-- Embeddings -> Endee -->
-  <path d="M380 200 Q415 200 415 150 T450 150" class="connector" fill="none"/>
+  <!-- Embeddings -> Endee (Curved) -->
+  <path d="M380 205 C410 205 410 130 440 130" class="connector" fill="none" />
   
-  <!-- Endee -> Answer -->
-  <path d="M610 150 Q645 150 645 200 T680 200" class="connector" fill="none"/>
+  <!-- Embeddings -> LLM (Curved) -->
+  <path d="M380 205 C410 205 410 290 440 290" class="connector" fill="none" style="stroke:#555555; animation:none; opacity:0.3" />
+
+  <!-- Endee -> Answer (Curved) -->
+  <path d="M600 130 C630 130 630 205 680 205" class="connector" fill="none" />
   
-  <!-- LLM -> Answer -->
-  <path d="M610 280 Q645 280 645 230 T680 230" class="connector" fill="none" style="animation-delay: 1s;"/>
-  
-  <!-- Embeddings -> LLM -->
-  <path d="M380 200 Q415 200 415 280 T450 280" class="connector" fill="none" style="stroke:#ECECF1; opacity:0.2;"/>
+  <!-- LLM -> Answer (Curved) -->
+  <path d="M600 290 C630 290 630 205 680 205" class="connector" fill="none" style="animation-delay: 0.75s" />
+
+  <!-- CREDITS -->
+  <text x="810" y="400" text-anchor="end" class="credit-text">System Architected by Sowmiyan S</text>
 
 </svg>

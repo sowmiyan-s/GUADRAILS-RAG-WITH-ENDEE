@@ -65,4 +65,8 @@ Open [http://localhost:8000](http://localhost:8000) to start chatting.
 ---
 <div align="center">
 [Repository](https://github.com/sowmiyan-s/GUADRAILS-RAG-WITH-ENDEE) • [Issues](https://github.com/sowmiyan-s/GUADRAILS-RAG-WITH-ENDEE/issues) • [Docs](./docs)
+
+<br/>
+
+**Architected & Developed by [Sowmiyan S](https://github.com/sowmiyan-s)**
 </div>
