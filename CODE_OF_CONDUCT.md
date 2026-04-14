@@ -4,6 +4,8 @@
 
 In the interest of fostering an open and welcoming environment, we as contributors and maintainers pledge to making participation in our project and our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
 
+We are committed to building **GUADRAILS-RAG-WITH-ENDEE** as a privacy-first, security-conscious project where everyone feels valued and respected.
+
 ## Our Standards
 
 **Examples of behavior that contributes to creating a positive environment include:**
