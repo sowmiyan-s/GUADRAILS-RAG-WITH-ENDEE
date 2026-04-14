@@ -1,0 +1,77 @@
+<svg width="800" height="400" viewBox="0 0 800 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="400" rx="20" fill="#171717"/>
+  
+  <!-- Styles & Animations -->
+  <style>
+    @keyframes flow {
+      0% { stroke-dashoffset: 20; opacity: 0.3; }
+      50% { opacity: 1; }
+      100% { stroke-dashoffset: 0; opacity: 0.3; }
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+    }
+    .node { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14px; fill: #ECECF1; }
+    .label { font-family: 'Inter', sans-serif; font-size: 11px; fill: #9A9A9A; text-transform: uppercase; letter-spacing: 0.05em; }
+    .connector { stroke: #10A37F; stroke-width: 2; stroke-dasharray: 5 5; animation: flow 2s linear infinite; }
+    .box { stroke: #3D3D3D; stroke-width: 1.5; transition: all 0.3s; }
+    .accent-box { fill: rgba(16, 163, 127, 0.1); stroke: #10A37F; }
+    .pulse-node { animation: pulse 3s ease-in-out infinite; transform-origin: center; }
+  </style>
+
+  <!-- Nodes -->
+  
+  <!-- Document Input -->
+  <g transform="translate(50, 160)">
+    <rect class="box" width="120" height="80" rx="10" fill="#212121"/>
+    <text x="60" y="45" text-anchor="middle" class="node">Documents</text>
+    <text x="60" y="65" text-anchor="middle" class="label">PDF / TXT / DOCX</text>
+  </g>
+
+  <!-- Parsing/Embeddings -->
+  <g transform="translate(240, 160)">
+    <rect class="box accent-box" width="140" height="80" rx="10"/>
+    <text x="70" y="45" text-anchor="middle" class="node">Embeddings</text>
+    <text x="70" y="65" text-anchor="middle" class="label">MiniLM-L6-v2</text>
+  </g>
+
+  <!-- Vector DB -->
+  <g transform="translate(450, 100)" class="pulse-node">
+    <rect class="box" width="160" height="100" rx="15" fill="#212121" stroke="#10A37F" stroke-width="2"/>
+    <path d="M480 130 H580 M480 150 H580 M480 170 H580" stroke="#3D3D3D" stroke-width="2"/>
+    <text x="530" y="145" text-anchor="middle" class="node" style="fill:#10A37F">ENDEE DB</text>
+    <text x="530" y="165" text-anchor="middle" class="label">Vector Index</text>
+  </g>
+
+  <!-- LLM -->
+  <g transform="translate(450, 240)">
+    <rect class="box" width="160" height="80" rx="10" fill="#212121"/>
+    <text x="80" y="40" text-anchor="middle" class="node">Ollama / Cloud</text>
+    <text x="80" y="60" text-anchor="middle" class="label">Llama3 / Gemma2</text>
+  </g>
+
+  <!-- User Output -->
+  <g transform="translate(680, 160)">
+    <circle cx="40" cy="40" r="35" fill="rgba(16, 163, 127, 0.2)" stroke="#10A37F" stroke-width="1.5"/>
+    <text x="40" y="45" text-anchor="middle" class="node">Answer</text>
+  </g>
+
+  <!-- Connectors -->
+  <!-- Doc -> Embeddings -->
+  <line x1="170" y1="200" x2="240" y2="200" class="connector"/>
+  
+  <!-- Embeddings -> Endee -->
+  <path d="M380 200 Q415 200 415 150 T450 150" class="connector" fill="none"/>
+  
+  <!-- Endee -> Answer -->
+  <path d="M610 150 Q645 150 645 200 T680 200" class="connector" fill="none"/>
+  
+  <!-- LLM -> Answer -->
+  <path d="M610 280 Q645 280 645 230 T680 230" class="connector" fill="none" style="animation-delay: 1s;"/>
+  
+  <!-- Embeddings -> LLM -->
+  <path d="M380 200 Q415 200 415 280 T450 280" class="connector" fill="none" style="stroke:#ECECF1; opacity:0.2;"/>
+
+</svg>

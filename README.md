@@ -16,6 +16,10 @@
 
 <br/>
 
+![RAG Workflow](./docs/workflow.svg)
+
+<br/>
+
 > **Modern RAG pipeline powered by Endee for ultra-fast semantic search.**  
 > Complete local privacy. No data ever leaves your device.
 
