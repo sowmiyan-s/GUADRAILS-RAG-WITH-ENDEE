@@ -54,111 +54,117 @@
 
       <!-- TAB: CHAT -->
       <div id="tab-chat" class="tab-content active">
-          <div class="section-label sb-text">Active Selection</div>
-          <p class="hint-text sb-text" id="activeModelLabel">No model active</p>
+          <div class="settings-group">
+            <div class="section-label sb-text">Active Selection</div>
+            <p class="hint-text sb-text" id="activeModelLabel">No model active</p>
 
-          <button id="btnClear" class="btn btn-ghost btn-full sb-text" style="margin-top: 1rem;">
-            <svg style="width:14px;height:14px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-            Clear Thread
-          </button>
+            <button id="btnClear" class="btn btn-ghost btn-full sb-text">
+              <svg style="width:14px;height:14px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+              Clear Thread
+            </button>
+          </div>
       </div>
 
       <!-- TAB: DOCUMENTS -->
       <div id="tab-docs" class="tab-content">
-          <div class="section-label sb-text">Document Library</div>
-          <div id="storagePool" class="storage-pool">
-            <div class="storage-empty sb-text" id="storageEmpty">No indexed collections yet.</div>
-          </div>
-          <button id="btnRefreshStorage" class="btn btn-ghost btn-full sb-text" style="margin-top:0.5rem; font-size:0.7rem;">
-            Refresh Library
-          </button>
+          <div class="settings-group">
+            <div class="section-label sb-text">Document Library</div>
+            <div id="storagePool" class="storage-pool">
+              <div class="storage-empty sb-text" id="storageEmpty">No indexed collections yet.</div>
+            </div>
+            <button id="btnRefreshStorage" class="btn btn-ghost btn-full sb-text" style="font-size:0.7rem;">
+              Refresh Library
+            </button>
 
-          <hr class="divider" />
+            <hr class="divider" />
 
-          <div class="section-label sb-text">Add Documents</div>
-          <div class="drop-zone" id="dropZone" role="button" tabindex="0">
-            <div class="drop-title">Drop or <span class="drop-link" id="dropClick">browse</span></div>
-            <input type="file" id="fileInput" multiple accept=".pdf,.txt,.doc,.docx" style="display:none;" />
-          </div>
-          <div id="fileList" class="file-list" style="display:none;" role="list"></div>
-          <div class="upload-actions" style="margin-top:0.75rem;">
-            <button id="btnProcess" class="btn btn-primary btn-full">Process</button>
-            <button id="btnReset" class="btn btn-ghost btn-full" style="display:none; margin-top:0.4rem;">Remove</button>
-            <div id="uploadStatus" class="upload-status" style="margin-top:0.5rem;"></div>
-          </div>
+            <div class="section-label sb-text">Add Documents</div>
+            <div class="drop-zone" id="dropZone" role="button" tabindex="0">
+              <div class="drop-title">Drop or <span class="drop-link" id="dropClick">browse</span></div>
+              <input type="file" id="fileInput" multiple accept=".pdf,.txt,.doc,.docx" style="display:none;" />
+            </div>
+            <div id="fileList" class="file-list" style="display:none;" role="list"></div>
+            <div class="upload-actions">
+              <button id="btnProcess" class="btn btn-primary btn-full">Process</button>
+              <button id="btnReset" class="btn btn-ghost btn-full" style="display:none;">Remove</button>
+              <div id="uploadStatus" class="upload-status"></div>
+            </div>
 
-          <hr class="divider" />
+            <hr class="divider" />
 
-          <div class="section-label sb-text">Indexing Options</div>
-          <div style="margin-top:0.5rem;">
-            <label class="form-label" for="chunkSize">Chunk Size</label>
-            <input id="chunkSize" type="number" class="form-control" value="1000" min="100" step="100" />
-          </div>
-          <div style="margin-top:0.5rem;">
-            <label class="form-label" for="chunkOverlap">Overlap</label>
-            <input id="chunkOverlap" type="number" class="form-control" value="200" min="0" step="50" />
+            <div class="section-label sb-text">Indexing Options</div>
+            <div>
+              <label class="form-label" for="chunkSize">Chunk Size</label>
+              <input id="chunkSize" type="number" class="form-control" value="1000" min="100" step="100" />
+            </div>
+            <div>
+              <label class="form-label" for="chunkOverlap">Overlap</label>
+              <input id="chunkOverlap" type="number" class="form-control" value="200" min="0" step="50" />
+            </div>
           </div>
       </div>
 
       <!-- TAB: SETTINGS -->
       <div id="tab-settings" class="tab-content">
-          <div class="section-label sb-text">Connection</div>
-          <div style="margin-top:0.65rem;">
-            <label class="form-label sb-text" for="providerSelect">LLM Provider</label>
-            <select id="providerSelect" class="form-control sb-text">
-              <option value="ollama">Ollama (Offline)</option>
-              <option value="openai">OpenAI</option>
-              <option value="anthropic">Anthropic</option>
-              <option value="gemini">Gemini</option>
-            </select>
-          </div>
+          <div class="settings-group">
+            <div class="section-label sb-text">Connection</div>
+            <div>
+              <label class="form-label sb-text" for="providerSelect">LLM Provider</label>
+              <select id="providerSelect" class="form-control sb-text">
+                <option value="ollama">Ollama (Offline)</option>
+                <option value="openai">OpenAI</option>
+                <option value="anthropic">Anthropic</option>
+                <option value="gemini">Gemini</option>
+              </select>
+            </div>
 
-          <div id="ollamaStatus" class="status-badge status-loading" style="margin-top: 0.85rem;">
-            <span class="status-dot"></span>
-            <span class="sb-text" id="ollamaStatusText">Checking…</span>
-          </div>
+            <div id="ollamaStatus" class="status-badge status-loading">
+              <span class="status-dot"></span>
+              <span class="sb-text" id="ollamaStatusText">Checking…</span>
+            </div>
 
-          <div id="providerEndpointGroup" style="margin-top:0.65rem;">
-            <label class="form-label sb-text" for="ollamaEndpoint">Endpoint URL</label>
-            <input id="ollamaEndpoint" type="url" class="form-control sb-text" placeholder="http://localhost:11434" />
-          </div>
+            <div id="providerEndpointGroup">
+              <label class="form-label sb-text" for="ollamaEndpoint">Endpoint URL</label>
+              <input id="ollamaEndpoint" type="url" class="form-control sb-text" placeholder="http://localhost:11434" />
+            </div>
 
-          <div id="providerApiKeyGroup" style="margin-top:0.65rem; display:none;">
-            <label class="form-label sb-text" for="apiKey">API Key</label>
-            <input id="apiKey" type="password" class="form-control sb-text" placeholder="Enter API Key" />
-          </div>
+            <div id="providerApiKeyGroup" style="display:none;">
+              <label class="form-label sb-text" for="apiKey">API Key</label>
+              <input id="apiKey" type="password" class="form-control sb-text" placeholder="Enter API Key" />
+            </div>
 
-          <button id="btnStartOllama" class="btn btn-secondary btn-full" style="display:none; margin-top:0.65rem;">Launch Ollama</button>
+            <button id="btnStartOllama" class="btn btn-secondary btn-full" style="display:none;">Launch Ollama</button>
 
-          <div style="margin-top:0.85rem;">
-            <label class="form-label sb-text" for="modelSelect">Target Model</label>
-            <select id="modelSelect" class="form-control sb-text">
-              <option value="gemma3:1b">gemma3:1b</option>
-            </select>
+            <div>
+              <label class="form-label sb-text" for="modelSelect">Target Model</label>
+              <select id="modelSelect" class="form-control sb-text">
+                <option value="gemma3:1b">gemma3:1b</option>
+              </select>
+            </div>
           </div>
 
           <hr class="divider" />
 
-          <div class="section-label sb-text">Safety Protocol</div>
-          <label class="toggle-row" for="guardrailsToggle">
-            <span class="toggle-label sb-text">Active Guardrails</span>
-            <div class="toggle-switch">
-              <input type="checkbox" id="guardrailsToggle" checked />
-              <span class="toggle-slider"></span>
+          <div class="settings-group">
+            <div class="section-label sb-text">Safety Protocol</div>
+            <label class="toggle-row" for="guardrailsToggle">
+              <span class="toggle-label sb-text">Active Guardrails</span>
+              <div class="toggle-switch">
+                <input type="checkbox" id="guardrailsToggle" checked />
+                <span class="toggle-slider"></span>
+              </div>
+            </label>
+
+            <div>
+              <label class="form-label sb-text" for="sensitivitySelect">Sensitivity</label>
+              <select id="sensitivitySelect" class="form-control sb-text">
+                <option value="Public">Public</option>
+                <option value="Internal" selected>Internal</option>
+                <option value="Confidential">Confidential</option>
+                <option value="Restricted">Restricted</option>
+              </select>
             </div>
-          </label>
 
-          <div style="margin-top:0.75rem;">
-            <label class="form-label sb-text" for="sensitivitySelect">Sensitivity</label>
-            <select id="sensitivitySelect" class="form-control sb-text">
-              <option value="Public">Public</option>
-              <option value="Internal" selected>Internal</option>
-              <option value="Confidential">Confidential</option>
-              <option value="Restricted">Restricted</option>
-            </select>
-          </div>
-
-          <div style="margin-top:0.65rem;">
             <div id="sensitivityBadge" class="sensitivity-badge badge-internal">
               <span id="sensitivityBadgeLabel">INTERNAL</span>
             </div>
