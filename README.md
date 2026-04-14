@@ -3,16 +3,8 @@
 
 # ⚔️ GUADRAILS-RAG-WITH-ENDEE
 
-### Privacy-First, Fully Offline AI Document Assistant  
-**Enhanced with Endee Vector Database & Tiered Security Guardrails**  
-*v2.1.0 — Production-Ready Enterprise Architecture*
-
-<br/>
-
-![Python](https://img.shields.io/badge/Python-3.10%2B-3b82f6?style=for-the-badge&logo=python&logoColor=white)
-![FastAPI](https://img.shields.io/badge/FastAPI-v0.111-009688?style=for-the-badge&logo=fastapi&logoColor=white)
-![Endee](https://img.shields.io/badge/Endee-Native_Vector_DB-FF3B30?style=for-the-badge&logo=database)
-![Ollama](https://img.shields.io/badge/Ollama-Offline_LLM-black?style=for-the-badge&logo=ollama&logoColor=white)
+### Privacy-First • Enterprise-Grade • High-Performance RAG
+**Revolutionizing local document intelligence with Endee Vector Database.**
 
 <br/>
 
@@ -20,53 +12,133 @@
 
 <br/>
 
-> **Modern RAG pipeline powered by Endee for ultra-fast semantic search.**  
-> Complete local privacy. No data ever leaves your device.
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3b82f6?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-v0.111-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Endee](https://img.shields.io/badge/Endee-Native_Vector_DB-FF3B30?style=flat-square&logo=database)](https://github.com/endee-io/endee)
+[![Ollama](https://img.shields.io/badge/Ollama-Offline_LLM-black?style=flat-square&logo=ollama&logoColor=white)](https://ollama.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+
+<br/>
+
+> **Upload any document. Ask anything. Get answers — 100% locally.**  
+> Built for professionals who demand zero-trust privacy and billion-scale performance.
 
 </div>
 
 ---
 
-## 🎯 What's New in v2.1
+## 🌟 Overview
 
-- 🦅 **Endee Vector Core**: Native integration with Endee for billion-scale vector retrieval.
-- 🎨 **ChatGPT-Refined UI**: Restored the classic green aesthetic with modern sidebar navigation.
-- 📂 **Multi-Tab Sidebar**: Dedicated Chat, Documents, and Settings views for clarity.
-- 🏠 **Smart Home Dashboard**: Drag-and-drop landing page for instant document processing.
-- ⚡ **Asynchronous Indexing**: Real-time status updates during document ingestion.
+**GUADRAILS-RAG-WITH-ENDEE** is a production-ready Retrieval-Augmented Generation (RAG) system. Unlike standard RAG implementations that rely on cloud vector stores or lightweight local solutions, this project leverages **Endee**, a high-performance C++ optimized vector database capable of indexing billions of vectors with sub-millisecond latency.
+
+### Why this project?
+- 🔒 **Absolute Privacy**: No data leaves your machine. Ever.
+- ⚡ **Endee Engine**: Native C++ vector search for industry-leading speed.
+- 🎨 **Premium UI**: A sleek, ChatGPT-inspired interface with multi-tab navigation.
+- 🛡️ **Security Guardrails**: Tiered safety protocols to detect and mask sensitive data.
 
 ---
 
-## 🚀 Quick Setup
+## 🎯 Key Features
 
-### 1. Requirements
-- **Ollama**: [ollama.com](https://ollama.com)
-- **Endee**: [github.com/endee-io/endee](https://github.com/endee-io/endee)
+- 🦅 **Endee Vector Core**: Native integration for lightning-fast retrieval at scale.
+- 💬 **Multi-Model Support**: Use local models via Ollama (Llama3, Gemma2, Mistral) or cloud APIs.
+- 📂 **Consolidated Navigation**: Dedicated **Chat**, **Documents**, and **Settings** views in a tabbed sidebar.
+- 🏠 **Smart Onboarding**: Drag-and-drop landing page for instant document processing even without the sidebar.
+- 🔐 **Tiered Safety**: Public, Internal, Confidential, and Restricted security modes.
+- 🚀 **Zero-Config Setup**: One command to start, with sensible defaults for hardware.
+
+---
+
+## 🚀 Quick Start (2 Minutes)
+
+### 1. Prerequisites
+- **Ollama**: [Download & Run](https://ollama.com)
+- **Endee**: [Clone & Run](https://github.com/endee-io/endee) (Port 8080)
 
 ### 2. Run Application
 ```bash
+# Clone the repository
+git clone https://github.com/sowmiyan-s/GUADRAILS-RAG-WITH-ENDEE.git
+cd GUADRAILS-RAG-WITH-ENDEE
+
 # Install dependencies
 pip install -r requirements.txt
 
 # Start the server
 python app.py
 ```
-Open [http://localhost:8000](http://localhost:8000) to start chatting.
+👉 Access the dashboard at: **[http://localhost:8000](http://localhost:8000)**
 
 ---
 
-## 🛠️ Tech Stack
-- **Backend**: FastAPI (Python)
-- **Vector DB**: Endee
-- **Retriever**: LangChain + Endee Native Bridge
-- **LLMs**: Ollama (Llama3, Gemma2, Mistral)
-- **Frontend**: Vanilla JS + CSS (Modern Glassmorphism)
+## 🛠️ Detailed Installation & Setup
+
+### Local Development
+1. **Pull and serve a model** with Ollama:
+   ```bash
+   ollama pull gemma2:2b
+   ```
+2. **Start Endee** (Optimized for your CPU):
+   ```bash
+   # From the Endee root directory
+   ./install.sh --release --avx2
+   ./run.sh
+   ```
+3. **Configure Environment** (Optional):
+   Copy `.env.example` to `.env` to customize ports, models, or chunking parameters.
+
+### Docker Deployment
+Generate a production-ready container:
+```bash
+docker build -t guadrails-rag .
+docker run -p 8000:8000 guadrails-rag
+```
 
 ---
+
+## 📊 Technical Architecture
+
+- **Web Layer**: FastAPI + Vanilla JavaScript (Glassmorphism design)
+- **Vector Intelligence**: Endee (C++ Native)
+- **Orchestration**: LangChain + Custom Endee Bridge
+- **Embeddings**: HuggingFace `all-MiniLM-L6-v2` (Local, CPU/GPU optimized)
+- **Inference**: Ollama (Default) or OpenAI/Anthropic/Gemini APIs
+
+---
+
+## ⚖️ Security Guardrails
+
+The application includes an active safety engine that monitors input/output for sensitive information:
+- **PII Detection**: Automatically masks emails, phone numbers, and SSNs.
+- **Level-Based Filtering**: Adjust sensitivity from "Public" to "Restricted" based on document confidentiality.
+
+---
+
+## 🤝 Contributing & Community
+
+Refer to the following specialized guides for community standards:
+- [Code of Conduct](./CODE_OF_CONDUCT.md)
+- [Contributing Guidelines](./CONTRIBUTING.md)
+- [Security Policy](./SECURITY.md)
+
+---
+
+## 📜 License
+
+This project is licensed under the **MIT License**.
+
+---
+
 <div align="center">
-[Repository](https://github.com/sowmiyan-s/GUADRAILS-RAG-WITH-ENDEE) • [Issues](https://github.com/sowmiyan-s/GUADRAILS-RAG-WITH-ENDEE/issues) • [Docs](./docs)
+
+### ⭐ Star this repo if it helps you!
+
+[Repository](https://github.com/sowmiyan-s/GUADRAILS-RAG-WITH-ENDEE) • [Issues](https://github.com/sowmiyan-s/GUADRAILS-RAG-WITH-ENDEE/issues)
 
 <br/>
 
-**Architected & Developed by [Sowmiyan S](https://github.com/sowmiyan-s)**
+**Architected & Developed by [Sowmiyan S](https://github.com/sowmiyan-s)**  
+*Performance-Driven AI Intelligence*
+
 </div>
