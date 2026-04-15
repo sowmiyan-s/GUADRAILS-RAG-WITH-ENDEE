@@ -25,7 +25,7 @@
 <br/>
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/sowmiyan-s/GUADRAILS-RAG-WITH-ENDEE/output/github-snake-dark.svg" alt="Snake Animation" />
+  <img src="docs/workflow.svg" alt="Production Retrieval Workflow" width="800" />
 </div>
 
 </div>
@@ -604,11 +604,7 @@ spec:
 
 ### System Architecture
 
-<div align="center">
-  <img src="docs/workflow.svg" alt="Production Retrieval Workflow" width="800" />
-</div>
 
-<br/>
 
 ```
 ┌────────────────────────────────────────────────────────────┐
